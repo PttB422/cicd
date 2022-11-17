@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-cd ios
+
+PROJECT_DIR=./ios/cicd
+INFOPLIST_FILE=Info.plist
+
 buildNumber=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "${PROJECT_DIR}/${INFOPLIST_FILE}")
 newBuildNumber=$(($buildNumber + 1))
 $(/usr/libexec/PlistBuddy -c "Set :CFBundleVersion $newBuildNumber" "${PROJECT_DIR}/${INFOPLIST_FILE}")
