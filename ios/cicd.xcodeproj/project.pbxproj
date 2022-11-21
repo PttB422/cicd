@@ -527,7 +527,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.doxa.connex;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pttb.cicd;
 				PRODUCT_NAME = cicd;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
