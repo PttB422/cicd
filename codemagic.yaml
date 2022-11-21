@@ -19,8 +19,8 @@ workflows:
     scripts:
       - name: Generate .env
         script: |
-          #!/usr/bin/env bash
-          echo "APP_ENV=${APP_ENV}" > ".env"
+          echo "APP_ENV=$APP_ENV" > ".env"
+          cat .env
       - name: Install npm dependencies
         script: |
           npm install
