@@ -6,7 +6,7 @@ workflows:
     environment:
       groups:
         #!/usr/bin/env bash
-        - $APP_ENV
+        - uat
       vars:
         XCODE_WORKSPACE: 'cicd.xcworkspace'
         XCODE_SCHEME: 'cicd'
