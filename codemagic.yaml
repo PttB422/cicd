@@ -20,32 +20,48 @@ workflows:
       - name: Generate .env
         script: |
           echo "APP_ENV=$APP_ENV" > ".env"
-          cat .env
-      - name: Install npm dependencies
+      # - name: Install npm dependencies
+      #   script: |
+      #     npm install
+      # - name: Install CocoaPods dependencies
+      #   script: |
+      #     cd ios && pod install
+      # - name: Set up code signing settings on Xcode project
+      #   script: xcode-project use-profiles
+      # - name: Build ipa for distribution
+      #   script: |
+      #     # xcode-project build-ipa \
+      #     #   --workspace "$CM_BUILD_DIR/ios/$XCODE_WORKSPACE" \
+      #     #   --scheme "$XCODE_SCHEME" --archive-flags="-destination 'generic/platform=iOS'"
+      #     xcodebuild build \
+      #       -workspace "$CM_BUILD_DIR/ios/$XCODE_WORKSPACE" \
+      #       -scheme "$XCODE_SCHEME" \
+      #       -sdk iphonesimulator \
+      #       -destination 'platform=iOS Simulator,name=iPhone 11,OS=15.5' \
+      #       -configuration Release \
+      #       CODE_SIGN_IDENTITY="" \
+      #       CODE_SIGNING_REQUIRED=NO \
+      #       CODE_SIGNING_ALLOWED=NO
+      - name: Bump version
         script: |
-          npm install
-      - name: Install CocoaPods dependencies
+          PROJECT_DIR=./ios/cicd
+          INFOPLIST_FILE=Info.plist
+
+          buildNumber=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "${PROJECT_DIR}/${INFOPLIST_FILE}")
+          newBuildNumber=$(($buildNumber + 1))
+          $(/usr/libexec/PlistBuddy -c "Set :CFBundleVersion $newBuildNumber" "${PROJECT_DIR}/${INFOPLIST_FILE}")
+
+          VERSIONNUM=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "${PROJECT_DIR}/${INFOPLIST_FILE}")
+          NEWSUBVERSION=`echo $VERSIONNUM | awk -F "." '{print $3}'`
+          NEWSUBVERSION=$(($NEWSUBVERSION + 1))
+          NEWVERSIONSTRING=`echo $VERSIONNUM | awk -F "." '{print $1 "." $2 ".'$NEWSUBVERSION'" }'`
+          $(/usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $NEWVERSIONSTRING" "${PROJECT_DIR}/${INFOPLIST_FILE}")
+
+          echo "buildNumber: ${buildNumber} - newBuildNumber: ${newBuildNumber}"
+          echo "VERSIONNUM: ${VERSIONNUM} - NEWVERSIONSTRING: ${NEWVERSIONSTRING}"
+      - name: Push commit
         script: |
-          cd ios && pod install
-      - name: Set up code signing settings on Xcode project
-        script: xcode-project use-profiles
-      - name: Build ipa for distribution
-        script: |
-          # xcode-project build-ipa \
-          #   --workspace "$CM_BUILD_DIR/ios/$XCODE_WORKSPACE" \
-          #   --scheme "$XCODE_SCHEME" --archive-flags="-destination 'generic/platform=iOS'"
-          xcodebuild build \
-            -workspace "$CM_BUILD_DIR/ios/$XCODE_WORKSPACE" \
-            -scheme "$XCODE_SCHEME" \
-            -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 11,OS=15.5' \
-            -configuration Release \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_ALLOWED=NO
-      - name: Build and bump version
-        script: |
-          cd ..
+          git status
           git diff ./ios/cicd/Info.plist
           git checkout $APP_ENV
           git add .
