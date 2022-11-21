@@ -32,7 +32,7 @@ workflows:
           #   --workspace "$CM_BUILD_DIR/ios/$XCODE_WORKSPACE" \
           #   --scheme "$XCODE_SCHEME" --archive-flags="-destination 'generic/platform=iOS'"
           xcodebuild build \
-            -workspace "$XCODE_WORKSPACE" \
+            -workspace "$CM_BUILD_DIR/ios/$XCODE_WORKSPACE" \
             -scheme "$XCODE_SCHEME" \
             -sdk iphonesimulator \
             -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.7' \
