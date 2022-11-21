@@ -35,7 +35,7 @@ workflows:
             -workspace "$CM_BUILD_DIR/ios/$XCODE_WORKSPACE" \
             -scheme "$XCODE_SCHEME" \
             -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.7' \
+            -destination 'platform=iOS Simulator,name=iPhone 11,OS=15.5' \
             -configuration Release \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
