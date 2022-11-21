@@ -5,7 +5,6 @@ workflows:
     instance_type: mac_mini_m1
     environment:
       groups:
-        #!/usr/bin/env bash
         - uat
       vars:
         XCODE_WORKSPACE: 'cicd.xcworkspace'
@@ -24,6 +23,10 @@ workflows:
       - name: Install CocoaPods dependencies
         script: |
           cd ios && pod install
+      - name: Generate .env
+        script: |
+          #!/usr/bin/env bash
+          echo "APP_ENV=${APP_ENV}" > ".env"
       - name: Set up code signing settings on Xcode project
         script: xcode-project use-profiles
       - name: Build ipa for distribution
