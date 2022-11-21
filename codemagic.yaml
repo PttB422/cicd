@@ -63,8 +63,7 @@ workflows:
         script: |
           git remote set-url origin https://PttB422:$GIT_PW@github.com/PttB422/cicd.git
           git checkout $APP_ENV
-          git add .
-          git commit -am "build and bump version"
+          git commit -am "build and bump version" --author="Codemagic"
           git push origin $APP_ENV
     artifacts:
       - build/ios/ipa/*.ipa
