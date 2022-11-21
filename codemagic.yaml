@@ -10,13 +10,13 @@ workflows:
       vars:
         XCODE_WORKSPACE: 'cicd.xcworkspace'
         XCODE_SCHEME: 'cicd'
-        BUNDLE_ID: 'com.doxa.connex'
+        BUNDLE_ID: 'com.pttb.cicd'
       node: v16.11.1
       xcode: 13.4.1
       cocoapods: default
       ios_signing:
         distribution_type: development
-        bundle_identifier: com.doxa.connex
+        bundle_identifier: com.pttb.cicd
     scripts:
       - name: Install npm dependencies
         script: |
