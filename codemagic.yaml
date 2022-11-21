@@ -45,6 +45,8 @@ workflows:
             CODE_SIGNING_ALLOWED=NO
       - name: Build and bump version
         script: |
+          cd ..
+          git diff ./ios/cicd/Info.plist
           git checkout $APP_ENV
           git add .
           git commit -am "build and bump version"
