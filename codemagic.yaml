@@ -43,6 +43,12 @@ workflows:
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO
+      - name: Build and bump version
+        script: |
+          git checkout $APP_ENV
+          git add .
+          git commit -am "build and bump version"
+          git push origin $APP_ENV
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
