@@ -61,8 +61,7 @@ workflows:
           echo "VERSIONNUM: ${VERSIONNUM} - NEWVERSIONSTRING: ${NEWVERSIONSTRING}"
       - name: Push commit
         script: |
-          git status
-          git diff ./ios/cicd/Info.plist
+          git remote set-url https://PttB422:$GIT_PW@github.com/PttB422/cicd.git
           git checkout $APP_ENV
           git add .
           git commit -am "build and bump version"
