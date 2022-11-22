@@ -121,6 +121,17 @@ workflows:
 
           echo "versionCode: ${versionCode} - nextVersionCode: ${nextVersionCode}"
           echo "versionName: ${versionName} - nextVersionName: ${nextVersionName}"
+
+          cd ..
+          ANDROID_BUILD_GRADLE=./android/app/build.gradle
+
+          echo "[LOG] version code:" $VERSION_CODE_ANDROID
+          cat $ANDROID_BUILD_GRADLE
+          echo "[LOG] Updating version code to $VERSION_CODE_ANDROID in build.gradle file"
+
+          sed -i '' 's/versionCode [0-9a-zA-Z -_]*/versionCode '$(($nextVersionCode))'/' $ANDROID_BUILD_GRADLE
+          sed -i '' 's/versionName [0-9a-zA-Z -_]*/versionName "'$nextVersionName'"/' $ANDROID_BUILD_GRADLE
+
       - name: Build Android release
         script: |
           # Set environment variable so it can be used to increment build number in android/app/build.gradle
