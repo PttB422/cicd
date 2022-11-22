@@ -70,6 +70,14 @@ workflows:
       - /tmp/xcodebuild_logs/*.log
       - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
       - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+    publishing:
+      email:
+        recipients:
+          - phat.bui@southasiaservices.com
+          - phattienbui95@gmail.com
+        notify:
+          success: true
+          failure: true
   react-native-android:
     name: React Native Android
     max_build_duration: 120
@@ -129,3 +137,11 @@ workflows:
     artifacts:
       - android/app/build/outputs/**/*.aab
       - android/app/build/outputs/**/*.apk
+    publishing:
+      email:
+        recipients:
+          - phat.bui@southasiaservices.com
+          - phattienbui95@gmail.com
+        notify:
+          success: true
+          failure: true
