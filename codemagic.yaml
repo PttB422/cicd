@@ -81,6 +81,9 @@ workflows:
         PACKAGE_NAME: com.cicd
       node: v16.11.1
     scripts:
+      - name: Generate .env
+        script: |
+          echo "APP_ENV=$APP_ENV" > ".env"
       - name: Install npm dependencies
         script: |
           npm install
