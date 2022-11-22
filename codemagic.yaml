@@ -120,6 +120,12 @@ workflows:
           # export NEW_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks=alpha) + 1))
           # export LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME") + 1))
           cd android && ./gradlew assembleRelease
+      - name: Push commit
+        script: |
+          git remote set-url origin https://PttB422:$GIT_PW@github.com/PttB422/cicd.git
+          git checkout $APP_ENV
+          git commit -am "build and bump version"
+          git push origin $APP_ENV
     artifacts:
       - android/app/build/outputs/**/*.aab
       - android/app/build/outputs/**/*.apk
