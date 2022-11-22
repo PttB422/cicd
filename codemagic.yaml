@@ -62,6 +62,7 @@ workflows:
       - name: Push commit
         script: |
           git remote set-url origin https://PttB422:$GIT_PW@github.com/PttB422/cicd.git
+          git add .
           git checkout $APP_ENV
           git commit -am "build and bump version"
           git push origin $APP_ENV
@@ -130,8 +131,9 @@ workflows:
           cd android && ./gradlew assembleRelease
       - name: Push commit
         script: |
-          git remote set-url origin https://PttB422:$GIT_PW@github.com/PttB422/cicd.git
+          # git remote set-url origin https://PttB422:$GIT_PW@github.com/PttB422/cicd.git
           git checkout $APP_ENV
+          git add .
           git commit -am "build and bump version"
           git push origin $APP_ENV
     artifacts:
