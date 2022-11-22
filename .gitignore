@@ -64,3 +64,5 @@ buck-out/
 .env.*
 
 ios/tmp.xcconfig
+
+package-lock.json

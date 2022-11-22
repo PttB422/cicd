@@ -125,9 +125,10 @@ workflows:
           cd ..
           ANDROID_BUILD_GRADLE=./android/app/build.gradle
 
-          echo "[LOG] version code:" $VERSION_CODE_ANDROID
-          cat $ANDROID_BUILD_GRADLE
-          echo "[LOG] Updating version code to $VERSION_CODE_ANDROID in build.gradle file"
+          echo "[LOG] version code:" $versionCode
+          echo "[LOG] version name:" $versionName
+          echo "[LOG] Updating version code to $nextVersionCode in build.gradle file"
+          echo "[LOG] Updating version name to $nextVersionName in build.gradle file"
 
           sed -i '' 's/versionCode [0-9a-zA-Z -_]*/versionCode '$(($nextVersionCode))'/' $ANDROID_BUILD_GRADLE
           sed -i '' 's/versionName [0-9a-zA-Z -_]*/versionName "'$nextVersionName'"/' $ANDROID_BUILD_GRADLE
